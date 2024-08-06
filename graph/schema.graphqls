@@ -1,0 +1,39 @@
+# Definindo um model
+type Category {
+  id: ID!  # A exclamação `!` indica que o campo é obrigatório
+  name: String!
+  description: String
+  courses: [Course!]! # Relacionamento: has many
+}
+
+type Course {
+  id: ID!
+  name: String!
+  description: String
+  categoryId: Category! # Relacionamento: belongs to
+}
+
+# Criando os inputs para informar quais campos eu 
+# preciso para criar uma nova categoria e novo curso
+input NewCategory {
+  name: String!
+  description: String
+}
+
+input NewCourse {
+  name: String!
+  description: String
+  categoryId: ID!
+}
+
+# Com o GraphQL também podemos fazer consultas, dessa forma:
+type Query {
+  categories: [Category!]!
+  courses: [Course!]!
+}
+
+# Criando mutations, uma para criar categoria e outra para criar curso
+type Mutation {
+  createCategory(input: NewCategory!): Category!
+  createCourse(input: NewCourse!): Course!
+}
